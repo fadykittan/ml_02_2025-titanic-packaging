@@ -1,0 +1,14 @@
+name: GitHub Actions Demo
+
+run-name: ${{github.actor}} is running this action
+
+on: [push]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello world!!"
+      - run: echo "Hello ${{github.actor}} , from ${{github.event_name}} , ${{ github.repository }}"
+
+      

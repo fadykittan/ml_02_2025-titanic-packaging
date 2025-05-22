@@ -42,11 +42,11 @@ jobs:
 
       - name: Run Titanic prediction and generate whylogs profile
         run: |
-          mkdir output
-          python scripts/generate_profile.py --input data/test.csv --output output/profile.bin
+          mkdir -p output/whylogs
+          python scripts/generate_profile.py --input data/test.csv --output output/whylogs
 
       - name: Upload whylogs profile artifact
         uses: actions/upload-artifact@v4
         with:
           name: whylogs-profile
-          path: output/profile.bin
+          path: output/whylogs

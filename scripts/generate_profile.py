@@ -16,10 +16,11 @@ def main():
     results = why.log(df)
     profile = results.profile()
 
-    # Write profile to binary file
+    # Ensure the output directory exists
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
-    with open(args.output, "wb") as f:
-        f.write(profile.serialize())
+
+    # Write profile to binary file
+    profile.write_protobuf(args.output)
 
     print(f"WhyLogs profile saved to {args.output}")
 

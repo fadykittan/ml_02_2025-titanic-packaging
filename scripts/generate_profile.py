@@ -2,24 +2,24 @@ import argparse
 import os
 import pandas as pd
 import whylogs as why
-from whylogs.api.writer.file import FileWriter
 
 def main():
     parser = argparse.ArgumentParser(description="Generate WhyLogs profile from CSV")
     parser.add_argument("--input", required=True, help="Path to input CSV file")
-    parser.add_argument("--output", required=True, help="Path to save WhyLogs profile")
+    parser.add_argument("--output", required=True, help="Path to output binary profile")
     args = parser.parse_args()
 
     # Load data
     df = pd.read_csv(args.input)
 
     # Generate profile
-    profile = why.log(df).profile()
+    results = why.log(df)
+    profile = results.profile()
 
-    # Save profile
+    # Write profile to binary file
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
-    writer = FileWriter(output_dir=os.path.dirname(args.output))
-    writer.write(file_name=os.path.basename(args.output), profile=profile)
+    with open(args.output, "wb") as f:
+        f.write(profile.serialize())
 
     print(f"WhyLogs profile saved to {args.output}")
 
